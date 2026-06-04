@@ -4,6 +4,7 @@ mod config;
 mod geometry;
 mod pixel;
 mod report;
+mod rules;
 
 #[pyfunction]
 fn _ping() -> &'static str {
