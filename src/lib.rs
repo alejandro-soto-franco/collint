@@ -1,5 +1,7 @@
 use pyo3::prelude::*;
 
+mod geometry;
+
 #[pyfunction]
 fn _ping() -> &'static str {
     "collint"
