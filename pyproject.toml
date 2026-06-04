@@ -6,6 +6,7 @@ build-backend = "maturin"
 name = "collint"
 version = "0.1.0"
 requires-python = ">=3.10"
+readme = "README.md"
 dependencies = ["matplotlib>=3.7", "numpy>=1.24"]
 
 [project.scripts]

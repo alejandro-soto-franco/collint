@@ -42,6 +42,7 @@ pub struct Report {
     pub collisions: Vec<Collision>,
 }
 
+#[allow(dead_code)] // mirrored by the pyo3 CollisionReport; exercised by unit tests
 impl Report {
     pub fn has_collisions(&self) -> bool {
         !self.collisions.is_empty()
