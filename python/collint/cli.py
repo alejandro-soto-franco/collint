@@ -12,6 +12,9 @@ from collint.overlay import render_overlay
 
 def _load_fig(path):
     spec = importlib.util.spec_from_file_location("collint_target", path)
+    if spec is None or spec.loader is None:
+        print(f"error: cannot load {path}", file=sys.stderr)
+        sys.exit(2)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     fig = getattr(module, "fig", None)

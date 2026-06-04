@@ -1,6 +1,6 @@
 """collint: detect and auto-fix visual collisions in matplotlib figures."""
 
-from . import _core
+from . import _core  # type: ignore  # native pyo3 extension, no static stub
 from .extract import extract_boxes
 from .render import capture_rgba, ensure_drawn, hidden
 
