@@ -11,6 +11,9 @@ dependencies = ["matplotlib>=3.7", "numpy>=1.24"]
 [project.scripts]
 collint = "collint.cli:main"
 
+[project.entry-points.pytest11]
+collint = "collint.pytest_collint"
+
 [tool.maturin]
 features = ["extension-module"]
 python-source = "python"
