@@ -2,6 +2,7 @@ use pyo3::prelude::*;
 
 mod config;
 mod geometry;
+mod report;
 
 #[pyfunction]
 fn _ping() -> &'static str {
