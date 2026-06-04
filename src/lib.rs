@@ -2,6 +2,7 @@ use pyo3::prelude::*;
 
 mod config;
 mod geometry;
+mod pixel;
 mod report;
 
 #[pyfunction]
