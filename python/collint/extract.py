@@ -47,9 +47,17 @@ def extract_boxes(fig):
                 )
 
         # Tick labels (clipped by the figure; they sit just outside the axes).
+        # Only labels whose tick lies within the axis view are actually drawn;
+        # matplotlib clips off-view tick labels to the axes, so skip them.
         for axis in (ax.xaxis, ax.yaxis):
-            for tick_text in axis.get_ticklabels():
+            vmin, vmax = axis.get_view_interval()
+            lo, hi = (vmin, vmax) if vmin <= vmax else (vmax, vmin)
+            locs = axis.get_majorticklocs()
+            labels = axis.get_majorticklabels()
+            for loc, tick_text in zip(locs, labels):
                 if not tick_text.get_text():
+                    continue
+                if loc < lo or loc > hi:
                     continue
                 boxes.append(
                     TaggedBox(
