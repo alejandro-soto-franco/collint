@@ -1,0 +1,17 @@
+[build-system]
+requires = ["maturin>=1.5,<2"]
+build-backend = "maturin"
+
+[project]
+name = "collint"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["matplotlib>=3.7", "numpy>=1.24"]
+
+[project.scripts]
+collint = "collint.cli:main"
+
+[tool.maturin]
+features = ["extension-module"]
+python-source = "python"
+module-name = "collint._core"
