@@ -40,13 +40,19 @@ mod tests {
 
     #[test]
     fn disjoint_boxes_have_zero_intersection() {
-        assert_eq!(intersection_area((0.0, 0.0, 1.0, 1.0), (2.0, 2.0, 3.0, 3.0)), 0.0);
+        assert_eq!(
+            intersection_area((0.0, 0.0, 1.0, 1.0), (2.0, 2.0, 3.0, 3.0)),
+            0.0
+        );
     }
 
     #[test]
     fn overlapping_boxes_intersection_area() {
         // overlap rectangle is 1x1
-        assert_eq!(intersection_area((0.0, 0.0, 2.0, 2.0), (1.0, 1.0, 3.0, 3.0)), 1.0);
+        assert_eq!(
+            intersection_area((0.0, 0.0, 2.0, 2.0), (1.0, 1.0, 3.0, 3.0)),
+            1.0
+        );
     }
 
     #[test]
@@ -59,17 +65,26 @@ mod tests {
 
     #[test]
     fn edge_touching_is_not_overlap() {
-        assert_eq!(intersection_area((0.0, 0.0, 1.0, 1.0), (1.0, 0.0, 2.0, 1.0)), 0.0);
+        assert_eq!(
+            intersection_area((0.0, 0.0, 1.0, 1.0), (1.0, 0.0, 2.0, 1.0)),
+            0.0
+        );
     }
 
     #[test]
     fn contained_box_has_zero_clip_residual() {
-        assert_eq!(clip_residual((1.0, 1.0, 2.0, 2.0), (0.0, 0.0, 10.0, 10.0)), 0.0);
+        assert_eq!(
+            clip_residual((1.0, 1.0, 2.0, 2.0), (0.0, 0.0, 10.0, 10.0)),
+            0.0
+        );
     }
 
     #[test]
     fn overhang_measured_in_pixels() {
         // inner pokes 3px past the right edge
-        assert_eq!(clip_residual((0.0, 0.0, 13.0, 1.0), (0.0, 0.0, 10.0, 10.0)), 3.0);
+        assert_eq!(
+            clip_residual((0.0, 0.0, 13.0, 1.0), (0.0, 0.0, 10.0, 10.0)),
+            3.0
+        );
     }
 }

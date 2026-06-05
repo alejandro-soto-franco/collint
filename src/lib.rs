@@ -66,6 +66,7 @@ impl From<report::Collision> for Collision {
 #[pymethods]
 impl Collision {
     #[new]
+    #[allow(clippy::too_many_arguments)]
     fn new(
         kind: String,
         a_role: String,
@@ -76,11 +77,23 @@ impl Collision {
         b_box: (f64, f64, f64, f64),
         severity: f64,
     ) -> Self {
-        Collision { kind, a_role, a_id, a_box, b_role, b_id, b_box, severity }
+        Collision {
+            kind,
+            a_role,
+            a_id,
+            a_box,
+            b_role,
+            b_id,
+            b_box,
+            severity,
+        }
     }
 
     fn __repr__(&self) -> String {
-        format!("Collision(kind={}, severity={:.3})", self.kind, self.severity)
+        format!(
+            "Collision(kind={}, severity={:.3})",
+            self.kind, self.severity
+        )
     }
 }
 
@@ -123,7 +136,10 @@ impl CollisionReport {
 
     #[getter]
     fn severity(&self) -> f64 {
-        self.collisions.iter().map(|c| c.severity).fold(0.0, f64::max)
+        self.collisions
+            .iter()
+            .map(|c| c.severity)
+            .fold(0.0, f64::max)
     }
 
     fn total(&self) -> f64 {
@@ -131,11 +147,19 @@ impl CollisionReport {
     }
 
     fn exit_code(&self) -> i32 {
-        if self.collisions.is_empty() { 0 } else { 1 }
+        if self.collisions.is_empty() {
+            0
+        } else {
+            1
+        }
     }
 
     fn by_type(&self, kind: &str) -> Vec<Collision> {
-        self.collisions.iter().filter(|c| c.kind == kind).cloned().collect()
+        self.collisions
+            .iter()
+            .filter(|c| c.kind == kind)
+            .cloned()
+            .collect()
     }
 
     fn to_json(&self) -> String {
@@ -164,6 +188,7 @@ impl CollisionReport {
 
 /// Classify tagged boxes. Each input tuple is
 /// (bx, clip, role, id) where bx/clip are (x0,y0,x1,y1).
+#[allow(clippy::type_complexity)]
 #[pyfunction]
 #[pyo3(signature = (boxes, overlap_fraction=None, clip_px=None))]
 fn classify(

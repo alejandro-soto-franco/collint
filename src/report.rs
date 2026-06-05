@@ -50,7 +50,10 @@ impl Report {
 
     /// Max severity across all collisions (0.0 if none).
     pub fn severity(&self) -> f64 {
-        self.collisions.iter().map(|c| c.severity).fold(0.0, f64::max)
+        self.collisions
+            .iter()
+            .map(|c| c.severity)
+            .fold(0.0, f64::max)
     }
 
     /// Total overlap-style severity, used by autofix to compare two figures.
@@ -109,7 +112,9 @@ mod tests {
 
     #[test]
     fn json_contains_kind_string() {
-        let r = Report { collisions: vec![sample(Kind::OverData, 0.3)] };
+        let r = Report {
+            collisions: vec![sample(Kind::OverData, 0.3)],
+        };
         assert!(r.to_json().contains("over_data"));
     }
 }

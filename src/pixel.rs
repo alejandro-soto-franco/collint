@@ -9,8 +9,7 @@ pub type Region = (usize, usize, usize, usize);
 /// True if pixel differs from `bg` (RGB) by more than `tol` on any channel.
 #[inline]
 fn is_foreground(r: u8, g: u8, b: u8, bg: [u8; 3], tol: u8) -> bool {
-    let d = |x: u8, y: u8| -> u8 { if x > y { x - y } else { y - x } };
-    d(r, bg[0]) > tol || d(g, bg[1]) > tol || d(b, bg[2]) > tol
+    r.abs_diff(bg[0]) > tol || g.abs_diff(bg[1]) > tol || b.abs_diff(bg[2]) > tol
 }
 
 /// Fraction of pixels in `region` that are foreground relative to `bg`.
@@ -105,6 +104,9 @@ mod tests {
     #[test]
     fn empty_region_is_zero() {
         let buf = white(10, 10);
-        assert_eq!(ink_coverage(&buf.view(), (5, 5, 5, 9), [255, 255, 255], 8), 0.0);
+        assert_eq!(
+            ink_coverage(&buf.view(), (5, 5, 5, 9), [255, 255, 255], 8),
+            0.0
+        );
     }
 }

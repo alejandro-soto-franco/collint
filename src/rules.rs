@@ -130,7 +130,12 @@ mod tests {
     use super::*;
 
     fn tb(bx: Box4, clip: Box4, role: &str, id: &str) -> TaggedBox {
-        TaggedBox { bx, clip, role: role.into(), id: id.into() }
+        TaggedBox {
+            bx,
+            clip,
+            role: role.into(),
+            id: id.into(),
+        }
     }
 
     #[test]
