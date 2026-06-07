@@ -27,7 +27,8 @@ fn make_config(
 }
 
 /// A collision exposed to Python.
-#[pyclass]
+// `from_py_object`: Collision is accepted as input (CollisionReport::new takes Vec<Collision>).
+#[pyclass(from_py_object)]
 #[derive(Clone)]
 struct Collision {
     #[pyo3(get)]
@@ -98,7 +99,8 @@ impl Collision {
 }
 
 /// An over-data candidate handed back to Python for pixel confirmation.
-#[pyclass]
+// `skip_from_py_object`: only ever returned to Python, never extracted from it.
+#[pyclass(skip_from_py_object)]
 #[derive(Clone)]
 struct OverDataCandidate {
     #[pyo3(get)]
@@ -229,7 +231,7 @@ fn ink_coverage(
     tol: u8,
 ) -> f64 {
     let view = buffer.as_array();
-    py.allow_threads(|| pixel::ink_coverage(&view, region, [bg.0, bg.1, bg.2], tol))
+    py.detach(|| pixel::ink_coverage(&view, region, [bg.0, bg.1, bg.2], tol))
 }
 
 #[pymodule]
