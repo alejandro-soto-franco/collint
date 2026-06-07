@@ -1,6 +1,6 @@
 [package]
 name = "collint"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 publish = false
 
@@ -9,8 +9,8 @@ name = "_core"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-pyo3 = { version = "0.22", features = ["abi3-py310"] }
-numpy = "0.22"
+pyo3 = { version = "0.28", features = ["abi3-py310"] }
+numpy = "0.28"
 ndarray = "0.16"
 rayon = "1"
 serde = { version = "1", features = ["derive"] }
