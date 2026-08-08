@@ -2,6 +2,9 @@
 name = "collint"
 version = "0.1.2"
 edition = "2021"
+license = "Apache-2.0"
+description = "Detect and auto-fix visual collisions in matplotlib figures"
+repository = "https://github.com/alejandro-soto-franco/collint"
 publish = false
 
 [lib]

@@ -7,6 +7,8 @@ name = "collint"
 dynamic = ["version"]
 requires-python = ">=3.10"
 readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE-APACHE"]
 dependencies = ["matplotlib>=3.7", "numpy>=1.24"]
 
 [project.scripts]
