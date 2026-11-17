@@ -4,12 +4,12 @@ Detect and auto-fix visual collisions in matplotlib figures.
 
 `collint` inspects a rendered figure and finds overlapping or clipped elements:
 
-- **text-text**: tick labels, annotations, axis labels, titles, or legend text overlapping each other
-- **clipping**: titles, axis labels, or tick labels cut off by the figure edge
-- **over-data**: a legend or annotation covering plotted data
-- **element-element**: overlapping subplots, colorbars, or a suptitle colliding with subplot titles
+- text-text: tick labels, annotations, axis labels, titles, or legend text overlapping each other
+- clipping: titles, axis labels, or tick labels cut off by the figure edge
+- over-data: a legend or annotation covering plotted data
+- element-element: overlapping subplots, colorbars, or a suptitle colliding with subplot titles
 
-Detection is geometry-based over the rendered bounding boxes. The over-data case is confirmed by sampling the pixels underneath the decoration, so a legend placed over an empty region of a sparse plot is not falsely reported.
+Detection is geometry-based over the rendered bounding boxes. The over-data case is confirmed by sampling the pixels underneath the decoration. A legend placed over an empty region of a sparse plot is reported only when data lies underneath.
 
 ## Install
 
@@ -46,9 +46,9 @@ print(report.severity)              # worst overlap fraction
 print(report.to_json())             # machine-readable list
 ```
 
-`check` never mutates the figure. It draws the figure on an Agg renderer if needed, so it works headless.
+`check` never mutates the figure. It draws the figure on an Agg renderer if needed and works headless.
 
-## The report
+## Report
 
 `check` returns a `CollisionReport`:
 
@@ -64,7 +64,7 @@ report.by_type("text_text")  # collisions of one kind
 report.to_json()           # JSON string
 ```
 
-Each `Collision` carries the two elements involved:
+Each `Collision` has the two elements involved:
 
 ```python
 for c in report.collisions:
@@ -103,7 +103,7 @@ The overlay is written to disk and the original figure is left unchanged.
 
 ## Command line
 
-Point the CLI at a Python file that defines a module-level `fig`. It prints the JSON report and exits non-zero when collisions are found, which makes it easy to gate a figure-generation pipeline.
+Point the CLI at a Python file that defines a module-level `fig`. It prints the JSON report and exits non-zero when collisions are found. A figure-generation pipeline can fail on that exit status.
 
 ```bash
 collint myfigure.py
@@ -158,4 +158,4 @@ collint.check(
 )
 ```
 
-Defaults ignore sub-pixel and antialiasing noise. Set `use_pixels=False` to run geometry-only detection, which is faster but reports any legend or annotation whose bounding box overlaps a data artist, even over empty regions.
+Defaults ignore sub-pixel and antialiasing noise. Set `use_pixels=False` to run geometry-only detection. This is faster but reports any legend or annotation whose bounding box overlaps a data artist, even over empty regions.
